@@ -42,7 +42,7 @@ import java.util.concurrent.TimeoutException;
         usage = "/plot alias <set | remove> <alias>",
         aliases = {"setalias", "sa", "name", "rename", "setname", "seta", "nameplot"},
         category = CommandCategory.SETTINGS,
-        requiredType = RequiredType.PLAYER)
+        requiredType = RequiredType.NONE)
 public class Alias extends SubCommand {
 
     private static final Command SET_COMMAND = new Command(null, false, "set", null, RequiredType.NONE, null) {

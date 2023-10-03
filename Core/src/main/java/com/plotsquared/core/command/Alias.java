@@ -159,30 +159,11 @@ public class Alias extends SubCommand {
                 );
                 return;
             }
-            if (Settings.UUID.OFFLINE) {
-                plot.setAlias(alias);
-                player.sendMessage(
-                        TranslatableCaption.of("alias.alias_set_to"),
-                        TagResolver.resolver("alias", Tag.inserting(Component.text(alias)))
-                );
-                return;
-            }
-            PlotSquared.get().getImpromptuUUIDPipeline().getSingle(alias, ((uuid, throwable) -> {
-                if (throwable instanceof TimeoutException) {
-                    player.sendMessage(TranslatableCaption.of("players.fetching_players_timeout"));
-                } else if (uuid != null) {
-                    player.sendMessage(
-                            TranslatableCaption.of("alias.alias_is_taken"),
-                            TagResolver.resolver("alias", Tag.inserting(Component.text(alias)))
-                    );
-                } else {
-                    plot.setAlias(alias);
-                    player.sendMessage(
-                            TranslatableCaption.of("alias.alias_set_to"),
-                            TagResolver.resolver("alias", Tag.inserting(Component.text(alias)))
-                    );
-                }
-            }));
+            plot.setAlias(alias);
+            player.sendMessage(
+                    TranslatableCaption.of("alias.alias_set_to"),
+                    TagResolver.resolver("alias", Tag.inserting(Component.text(alias)))
+            );
         }
     }
 

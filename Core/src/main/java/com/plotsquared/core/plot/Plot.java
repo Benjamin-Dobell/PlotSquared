@@ -38,6 +38,8 @@ import com.plotsquared.core.location.Direction;
 import com.plotsquared.core.location.Location;
 import com.plotsquared.core.permissions.Permission;
 import com.plotsquared.core.player.ConsolePlayer;
+import com.plotsquared.core.player.MetaDataAccess;
+import com.plotsquared.core.player.PlayerMetaDataKeys;
 import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.expiration.ExpireManager;
 import com.plotsquared.core.plot.expiration.PlotAnalysis;
@@ -1722,7 +1724,12 @@ public class Plot {
                 TagResolver.resolver("plot", Tag.inserting(Component.text(this.getId().toString())))
         );
         if (teleport) {
-            if (!auto && Settings.Teleport.ON_CLAIM) {
+            if (player instanceof ConsolePlayer) {
+                try (final MetaDataAccess<Plot> plotMetaDataAccess
+                             = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {
+                    plotMetaDataAccess.set(this);
+                }
+            } else if (!auto && Settings.Teleport.ON_CLAIM) {
                 teleportPlayer(player, TeleportCause.COMMAND_CLAIM, result -> {
                 });
             } else if (auto && Settings.Teleport.ON_AUTO) {

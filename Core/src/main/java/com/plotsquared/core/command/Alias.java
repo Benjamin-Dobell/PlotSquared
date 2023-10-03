@@ -58,8 +58,7 @@ public class Alias extends SubCommand {
             return false;
         }
 
-        Location location = player.getLocation();
-        Plot plot = location.getPlotAbs();
+        Plot plot = player.getCurrentPlot();
         if (plot == null) {
             player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));
             return false;

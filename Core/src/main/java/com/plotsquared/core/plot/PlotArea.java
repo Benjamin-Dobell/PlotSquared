@@ -70,17 +70,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
@@ -88,6 +79,9 @@ import java.util.function.Consumer;
  * @author Jesse Boyd, Alexander Söderberg
  */
 public abstract class PlotArea implements ComponentLike {
+    // Ender Start
+    private static final String ENDER_META_ID_KEY = "ENDER_PROJECT_PLOT";
+    // Ender end
 
     private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + PlotArea.class.getSimpleName());
     private static final MiniMessage MINI_MESSAGE = MiniMessage.builder().build();
@@ -675,6 +669,11 @@ public abstract class PlotArea implements ComponentLike {
         }
         final HashSet<Plot> myPlots = new HashSet<>();
         forEachPlotAbs(value -> {
+            // This seems to only be used for determining a player's plot count
+            // Ender start
+            if (Objects.equals(value.getMeta(ENDER_META_ID_KEY), true)) {
+                return;
+            }
             if (uuid.equals(value.getOwnerAbs())) {
                 myPlots.add(value);
             }
